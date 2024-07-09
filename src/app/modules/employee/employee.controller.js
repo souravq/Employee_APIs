@@ -1,7 +1,14 @@
 import {
   createEmployee,
   getAllEmployees,
+  getAvgSalaryByCity,
+  getEmployeeCountPerCity,
+  getEmployeesByAgeRange,
+  getEmployeesSortedByAge,
   getEmployeesSortedBySalary,
+  getMostPaidCity,
+  getTopPaidEmployees,
+  updateEmployee,
 } from "./employee.service.js";
 import { StatusCodes } from "http-status-codes";
 
@@ -29,6 +36,45 @@ export const getEmployeesBySalary = async (req, res) => {
   res.json(employees);
 };
 
+export const getEmployeesByAge = async (req, res) => {
+  const employees = await getEmployeesSortedByAge();
+  res.json(employees);
+};
+
+export const getTopEmployees = async (req, res) => {
+  const topNumber = parseInt(req.params.top_number);
+  const employees = await getTopPaidEmployees(topNumber);
+  res.json(employees);
+};
+
+export const getMostPayedCity = async (req, res) => {
+  const result = await getMostPaidCity();
+  res.json(result);
+};
+
+export const getAvgSalary = async (req, res) => {
+  const cityName = req.params.city_name;
+  const result = await getAvgSalaryByCity(cityName);
+  res.json(result);
+};
+
+export const getEmployeeCount = async (req, res) => {
+  const result = await getEmployeeCountPerCity();
+  res.json(result);
+};
+
+export const getEmployeesByAgeBetween = async (req, res) => {
+  const fromAge = parseInt(req.params.from_age);
+  const toAge = parseInt(req.params.to_age);
+  const employees = await getEmployeesByAgeRange(fromAge, toAge);
+  res.json(employees);
+};
+
+export const getCitySalaryPercentage = async (req, res) => {
+  const percentages = await getCitySalaryPercentage();
+  res.json(percentages);
+};
+
 export const createNewEmployee = async (req, res) => {
   try {
     const result = await createEmployee(req.body);
@@ -46,4 +92,9 @@ export const createNewEmployee = async (req, res) => {
       data: err,
     });
   }
+};
+
+export const updateExistingEmployee = async (req, res) => {
+  const updatedEmployee = await updateEmployee(req.params.id, req.body);
+  res.json(updatedEmployee);
 };
