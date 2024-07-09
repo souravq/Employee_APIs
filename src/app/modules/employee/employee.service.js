@@ -7,3 +7,9 @@ export const getAllEmployees = async () => {
     orderBy: { created_at: "asc" },
   });
 };
+
+export const createEmployee = async (data) => {
+  return await prisma.employee.create({
+    data,
+  });
+};
