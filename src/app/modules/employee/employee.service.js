@@ -8,6 +8,13 @@ export const getAllEmployees = async () => {
   });
 };
 
+// Employees Sorted By Salary
+export const getEmployeesSortedBySalary = async () => {
+  return await prisma.employee.findMany({
+    orderBy: { salary: "asc" },
+  });
+};
+
 export const createEmployee = async (data) => {
   return await prisma.employee.create({
     data,

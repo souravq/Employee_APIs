@@ -1,4 +1,8 @@
-import { createEmployee, getAllEmployees } from "./employee.service.js";
+import {
+  createEmployee,
+  getAllEmployees,
+  getEmployeesSortedBySalary,
+} from "./employee.service.js";
 import { StatusCodes } from "http-status-codes";
 
 export const getEmployees = async (req, res) => {
@@ -18,6 +22,11 @@ export const getEmployees = async (req, res) => {
       data: err,
     });
   }
+};
+
+export const getEmployeesBySalary = async (req, res) => {
+  const employees = await getEmployeesSortedBySalary();
+  res.json(employees);
 };
 
 export const createNewEmployee = async (req, res) => {
